@@ -1,0 +1,17 @@
+
+{% extends 'home.html' %}
+{% load static %}
+<div class="container">
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        <br>
+        <br><br>
+        <input type="text" name="username" placeholder="username"><br><br>
+        <input type="password" name="password" placeholder="password"><br><br>
+            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
+        </form>
+        Don't have an account? <a href="/signup" target="blank"><strong>Register here</strong></a>
+    </div>
+{% endblock %}
