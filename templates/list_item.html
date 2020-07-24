@@ -42,12 +42,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/list_item">List of Items</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/add_item">Add Items</a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout</a>
-      </li>
     </ul>
   </div>
 </nav>
@@ -63,13 +57,15 @@
 </ul>
 {% endif %}
       <div class="header">List of Items</div>
+      <div class="list">
       {% block content %}
  <form method='POST'>
      {% csrf_token %}
-    {{ form.as_table }}
+    {{ form|crispy }}
         <input type="submit" value='Search'/>
 </form>
-      {% endblock %}
+      </div>
+      {% endblock content %}
 <br>
 <table class='table'>
         <thead>

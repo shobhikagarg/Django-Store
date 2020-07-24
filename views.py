@@ -12,13 +12,11 @@ from .forms import IssueForm, ReceiveForm
 
 # Create your views here.
 def home(request):
-    title='Store'
-    form='Shobhika'
+    queryset = Stock.objects.all()
     context={
-        'title':title,
-        'form':form
+        'form':'form'
     }
-    return render(request,'home.html')
+    return render(request,'home.html',context)
 
 def about(request):
     return render(request,'about.html')
