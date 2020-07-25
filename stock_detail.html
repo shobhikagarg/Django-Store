@@ -1,0 +1,85 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Listing items</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/navbar-fixed/">
+
+
+      <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'navbar-top-fixed.css' %}" rel="stylesheet">
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">{{title}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/list_item">List of Items</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/add_item">Add Items</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="container">
+
+  <div class="jumbotron">
+      {% if messages %}
+<ul class="message">
+   {% for message in messages %}
+	   <li>{{ message }}</li>
+   {% endfor %}
+</ul>
+{% endif %}
+<body>
+<div class="header">List of Items</div>
+
+<a href="{% url 'issue_items' queryset.id %}"><div class='btn btn-danger'>ISSUE THIS ITEM</div></a>
+<a href="{% url 'receive_items' queryset.id %}"><div class='btn btn-primary'>RECEIVE THIS ITEM</div></a>
+        <br><br>
+        <div class="display_table">
+          <table class='table'>
+                  <tr>
+                    <th>ITEM NAME</th>
+                    <th>QUANTITY IN STORE</th>
+                    <th>LAST UPDATED</th>
+                    <th>REORDER LEVEL</th>
+                  </tr>
+                  <tr>
+                    <td>{{queryset.item_name}}</td>
+                    <td>{{queryset.quantity}}</td>
+                    <td>{{queryset.last_updated}}</td>
+                    <td>{{queryset.reorder_level}}</td>
+
+                  </tr>
+          </table>
+        </div>
+</body>

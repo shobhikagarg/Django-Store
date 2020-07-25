@@ -1,0 +1,112 @@
+{% load crispy_forms_tags %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/stylesheet.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Listing items</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/navbar-fixed/">
+
+
+      <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'navbar-top-fixed.css' %}" rel="stylesheet">
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">{{title}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/list_item">List of Items</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main role="main" class="container">
+
+  <div class="jumbotron">
+      {% if messages %}
+<ul class="message">
+   {% for message in messages %}
+	   <li>{{ message }}</li>
+   {% endfor %}
+</ul>
+{% endif %}
+      <div class="header">List of Items</div>
+      <div class="list">
+      {% block content %}
+ <form method='POST'>
+     {% csrf_token %}
+    {{ form|crispy }}
+        <input type="submit" value='Search'/>
+</form>
+      </div>
+      {% endblock content %}
+<br>
+<table class='table'>
+        <thead>
+          <tr>
+            <th>COUNT</th>
+            <th>CATEGORY</th>
+            <th>ITEM NAME</th>
+            <th>QUANTITY IN STORE</th>
+              <th>TIMESTAMP</th>
+              <th>DELETE</th>
+          </tr>
+        </thead>
+      {% for instance in queryset %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{instance.category}}</td>
+            <td>{{instance.item_name}}</td>
+            <td><a href="{% url 'stock_detail' instance.id %}">{{instance.quantity}}</a></td>
+              <td>{{instance.timestamp}}</td>
+              <td><a href="{% url 'delete_view' instance.id %}"><img src="{% static 'image/delete.png' %}"></a></td>
+          </tr>
+      {% endfor %}
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if queryset.has_previous %}
+            <a href="?page=1"><<</a>
+
+        {% endif %}
+
+        <span class="current">
+            Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}
+        </span>
+
+        {% if queryset.has_next %}
+            <a href="?page={{ queryset.next_page_number }}">>></a>
+        {% endif %}
+    </span>
+</div>
+  </div>
+</main>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script></body>
+</html>
